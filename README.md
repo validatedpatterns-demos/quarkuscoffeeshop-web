@@ -11,6 +11,18 @@ See [Working Locally](../WORKING-LOCALLY.md) for details
 ### Kafka and PostgreSQL
 This service depends on Kafka and PostgreSQL both of which are started by the Docker Compose file in the support project
 
+### Environment Variables
+
+This services uses the following environment variables:
+* KAFKA_BOOTSTRAP_SERVERS
+* STREAM_URL
+* CORS_ORIGINS
+
+You can set them for local development with the following:
+
+```shell script
+export KAFKA_BOOTSTRAP_SERVERS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080
+```
 
 ### Running Locally
 ```shell
