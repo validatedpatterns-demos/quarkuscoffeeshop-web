@@ -26,9 +26,10 @@ export KAFKA_BOOTSTRAP_SERVERS=localhost:9092 STREAM_URL=http://localhost:8080/d
 
 ### Running Locally
 ```shell
+export KAFKA_BOOTSTRAP_URLS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true
 docker build -f src/main/docker/Dockerfile.native -t <<DOCKER_HUB_ID>>/quarkus-cafe-web .
-docker run -i --network="host" -e STREAM_URL=${STREAM_URL} -e CORS_ORIGINS=${CORS_ORIGINS} -e KAFKA_BOOTSTRAP_URLS=${KAFKA_BOOTSTRAP_URLS} quarkus-cafe-demo/quarkus-cafe-web:latest
+docker run -i --network="host" -e STREAM_URL=${STREAM_URL} -e CORS_ORIGINS=${CORS_ORIGINS} -e KAFKA_BOOTSTRAP_URLS=${KAFKA_BOOTSTRAP_URLS} <<DOCKER_ID>>quarkuscoffeeshop-web:latest
 docker images -a | grep web
 docker tag <<RESULT>> <<DOCKER_HUB_ID>>/quarkus-cafe-web:<<VERSION>>
 ```
