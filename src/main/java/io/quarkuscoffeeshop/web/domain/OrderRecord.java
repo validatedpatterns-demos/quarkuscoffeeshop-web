@@ -1,6 +1,6 @@
 package io.quarkuscoffeeshop.web.domain;
 
-import io.quarkuscoffeeshop.domain.OrderInCommand;
+import io.quarkuscoffeeshop.domain.OrderPlacedEvent;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -27,12 +27,12 @@ public class OrderRecord {//extends PanacheEntity {
         this.lineItems = new ArrayList<>();
     }
 
-    public static OrderRecord createFromOrderInCommand(final OrderInCommand orderInCommand) {
-        OrderRecord orderRecord = new OrderRecord(orderInCommand.id);
-        orderRecord.lineItems.addAll(orderInCommand.getBeverages().stream().map(beverage -> {
+    public static OrderRecord createFromOrderInCommand(final OrderPlacedEvent orderPlacedEvent) {
+        OrderRecord orderRecord = new OrderRecord(orderPlacedEvent.id);
+        orderRecord.lineItems.addAll(orderPlacedEvent.getBeverages().stream().map(beverage -> {
             return new OrderLineItem(orderRecord, beverage.item, beverage.name);
         }).collect(Collectors.toList()));
-        orderRecord.lineItems.addAll(orderInCommand.getKitchenOrders().stream().map(kitchenOrder -> {
+        orderRecord.lineItems.addAll(orderPlacedEvent.getKitchenOrders().stream().map(kitchenOrder -> {
             return new OrderLineItem(orderRecord, kitchenOrder.item, kitchenOrder.name);
         }).collect(Collectors.toList()));
         return orderRecord;

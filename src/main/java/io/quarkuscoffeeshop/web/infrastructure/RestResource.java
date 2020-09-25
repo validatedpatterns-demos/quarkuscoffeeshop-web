@@ -44,20 +44,21 @@ public class RestResource {
     @POST
     @Path("order")
     @Transactional
-    public Response orderIn(final OrderInCommand orderInCommand) {
+    public Response orderIn(OrderPlacedEvent orderPlacedEvent) {
 
-        logger.debug("CreateOrderCommand received: {}", toJson(orderInCommand));
+        orderPlacedEvent.setOrderSource(OrderSource.WEB);
+        logger.debug("CreateOrderCommand received: {}", toJson(orderPlacedEvent));
 /*
         OrderRecord orderRecord = OrderRecord.createFromOrderInCommand(orderInCommand);
         orderRecord.persist();
 */
-        return orderService.placeOrder(orderInCommand)
+        return orderService.placeOrder(orderPlacedEvent)
             .handle((res, ex) -> {
                 if (ex != null) {
                     logger.error(ex.getMessage());
                     return Response.serverError().entity(ex).build();
                 }else{
-                    return Response.accepted().entity(orderInCommand).build();
+                    return Response.accepted().entity(orderPlacedEvent).build();
                 }
             }).join();
     }
