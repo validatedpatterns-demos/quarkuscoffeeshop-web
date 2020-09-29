@@ -11,7 +11,7 @@
 
   <groupId>io.quarkuscoffeeshop</groupId>
   <artifactId>quarkuscoffeeshop-web</artifactId>
-  <version>3.1.0</version>
+  <version>3.2.0-SNAPSHOT</version>
   <properties />
 
   <dependencyManagement />
@@ -20,6 +20,7 @@
     <dependency>
       <groupId>io.quarkuscoffeeshop</groupId>
       <artifactId>quarkuscoffeeshop-domain</artifactId>
+      <version>3.2.0-SNAPSHOT</version>
     </dependency>
     <!-- Testing -->
     <dependency>

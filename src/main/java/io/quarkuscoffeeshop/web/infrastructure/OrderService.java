@@ -24,10 +24,10 @@ public class OrderService {
     @Channel("orders-out")
     Emitter<String> ordersOutEmitter;
 
-    public CompletableFuture<Void> placeOrder(final OrderPlacedEvent orderPlacedEvent){
-        return ordersOutEmitter.send(toJson(orderPlacedEvent))
+    public CompletableFuture<Void> placeOrder(final PlaceOrderCommand placeOrderCommand){
+        return ordersOutEmitter.send(toJson(placeOrderCommand))
             .whenComplete((result, ex) -> {
-                logger.debug("OrderPlacedEvent sent: {}", orderPlacedEvent);
+                logger.debug("order sent: {}", placeOrderCommand);
                 if (ex != null) {
                     logger.error(ex.getMessage());
                 }

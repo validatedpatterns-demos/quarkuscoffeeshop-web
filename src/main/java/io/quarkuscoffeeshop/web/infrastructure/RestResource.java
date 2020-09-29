@@ -3,6 +3,7 @@ package io.quarkuscoffeeshop.web.infrastructure;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import io.quarkuscoffeeshop.web.domain.PlaceOrderCommandJson;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,21 +45,21 @@ public class RestResource {
     @POST
     @Path("order")
     @Transactional
-    public Response orderIn(OrderPlacedEvent orderPlacedEvent) {
+    public Response orderIn(final PlaceOrderCommandJson placeOrderCommandJson) {
 
-        orderPlacedEvent.setOrderSource(OrderSource.WEB);
-        logger.debug("CreateOrderCommand received: {}", toJson(orderPlacedEvent));
-/*
-        OrderRecord orderRecord = OrderRecord.createFromOrderInCommand(orderInCommand);
-        orderRecord.persist();
-*/
-        return orderService.placeOrder(orderPlacedEvent)
+        logger.debug("order received: {}", toJson(placeOrderCommandJson));
+
+        PlaceOrderCommand placeOrderCommand = new PlaceOrderCommand(OrderSource.WEB, placeOrderCommandJson.getBaristaItems(), placeOrderCommandJson.getKitchenItems());
+
+        logger.debug("placeOrderCommand: {}", toJson(placeOrderCommand));
+
+        return orderService.placeOrder(placeOrderCommand)
             .handle((res, ex) -> {
                 if (ex != null) {
                     logger.error(ex.getMessage());
                     return Response.serverError().entity(ex).build();
                 }else{
-                    return Response.accepted().entity(orderPlacedEvent).build();
+                    return Response.accepted().entity(placeOrderCommandJson).build();
                 }
             }).join();
     }
