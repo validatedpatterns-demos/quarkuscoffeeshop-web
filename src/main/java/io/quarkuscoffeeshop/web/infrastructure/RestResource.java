@@ -45,11 +45,11 @@ public class RestResource {
     @POST
     @Path("order")
     @Transactional
-    public Response orderIn(final PlaceOrderCommandJson placeOrderCommandJson) {
+    public Response orderIn(final PlaceOrderCommand placeOrderCommand) {
 
-        logger.debug("order received: {}", toJson(placeOrderCommandJson));
+        logger.debug("order received: {}", toJson(placeOrderCommand));
 
-        PlaceOrderCommand placeOrderCommand = new PlaceOrderCommand(OrderSource.WEB, placeOrderCommandJson.getBaristaItems(), placeOrderCommandJson.getKitchenItems());
+//        PlaceOrderCommand placeOrderCommand = new PlaceOrderCommand(OrderSource.WEB, placeOrderCommandJson.getBaristaItems(), placeOrderCommandJson.getKitchenItems());
 
         logger.debug("placeOrderCommand: {}", toJson(placeOrderCommand));
 
@@ -59,7 +59,7 @@ public class RestResource {
                     logger.error(ex.getMessage());
                     return Response.serverError().entity(ex).build();
                 }else{
-                    return Response.accepted().entity(placeOrderCommandJson).build();
+                    return Response.accepted().entity(placeOrderCommand).build();
                 }
             }).join();
     }
