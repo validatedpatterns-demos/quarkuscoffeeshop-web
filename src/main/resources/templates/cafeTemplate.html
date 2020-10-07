@@ -187,7 +187,7 @@
                                             <h6>Coffee (with room)</h6>
                                         </div>
                                         <div class="price pull-right">
-                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="COFFEE_WITH_ROOM" data-item_type="beverage" data-display_name="Coffee (with room)">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="COFFEE_WITH_ROOM" data-item_type="beverage" data-item_price="3.50"  data-display_name="Coffee (with room)">Add</button>
                                         </div>
                                     </div>
                                     <div class="desc">
@@ -200,7 +200,7 @@
                                             <h6>Espresso - $3.25</h6>
                                         </div>
                                         <div class="price pull-right">
-                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="ESPRESSO" data-item_type="beverage" data-display_name="Espresso">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="ESPRESSO" data-item_type="beverage" data-item_price="4.00"  data-display_name="Espresso">Add</button>
                                         </div>
                                     </div>
                                     <div class="desc">
@@ -213,7 +213,7 @@
                                             <h6>Espresso (Double) - $4.25</h6>
                                         </div>
                                         <div class="price pull-right">
-                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="ESPRESSO_DOUBLE" data-item_type="beverage"data-display_name="Double Espresso">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="ESPRESSO_DOUBLE" data-item_type="beverage"  data-item_price="5.25" data-display_name="Double Espresso">Add</button>
                                         </div>
                                     </div>
                                     <div class="desc">
@@ -226,7 +226,7 @@
                                             <h6>Cappuccino - $3.75</h6>
                                         </div>
                                         <div class="price pull-right">
-                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="CAPPUCCINO" data-item_type="beverage" data-display_name="Cappucino">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="CAPPUCCINO" data-item_type="beverage"  data-item_price="3.75" data-display_name="Cappucino">Add</button>
                                         </div>
                                     </div>
                                     <div class="desc">
@@ -241,7 +241,7 @@
                                             <h6>Croissant - $4.00</h6>
                                         </div>
                                         <div class="price pull-right">
-                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="CROISSANT" data-item_type="kitchen" data-display_name="Butter Croissant">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="CROISSANT" data-item_type="kitchen" data-item_price="3.00" data-display_name="Butter Croissant">Add</button>
                                         </div>
                                     </div>
                                     <div class="desc">
@@ -254,7 +254,7 @@
                                             <h6>Chocolate Croissant - $4.00</h6>
                                         </div>
                                         <div class="price pull-right">
-                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="CROISSANT_CHOCOLATE" data-item_type="kitchen" data-display_name="Chocolate Croissant">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="CROISSANT_CHOCOLATE" data-item_type="kitchen" data-item_price="3.25" data-display_name="Chocolate Croissant">Add</button>
                                         </div>
                                     </div>
                                     <div class="desc">
@@ -267,7 +267,7 @@
                                             <h6>Muffin - $3.25</h6>
                                         </div>
                                         <div class="price pull-right">
-                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="MUFFIN" data-item_type="kitchen" data-display_name="Muffin of the Day">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="MUFFIN" data-item_type="kitchen" data-item_price="3.50" data-display_name="Muffin of the Day">Add</button>
                                         </div>
                                     </div>
                                     <div class="desc">
@@ -280,7 +280,7 @@
                                             <h6>Cakepop - $2.25</h6>
                                         </div>
                                         <div class="price pull-right">
-                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="CAKEPOP" data-item_type="kitchen" data-display_name="Cakepop">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#myModal" data-whatever="CAKEPOP" data-item_type="kitchen" data-item_price="2.50" data-display_name="Cakepop">Add</button>
                                         </div>
                                     </div>
                                     <div class="desc">
@@ -981,12 +981,11 @@
         let name = $('#item_form').find('input[name="name"]').val();
         let price = $('#item_form').find('input[name="item_price"]').val();
 
-        let item_to_add = new Map();
-        item_to_add.set(item, { 'item': item, 'price': price});//{ name: { 'item': item, 'price': price}};
+        let item_to_add = { 'item' : item, 'name': name, 'price': price};
 
         if(item_type == 'beverage'){
             console.log('adding beverage');
-            var beverages = $('#order_form').find('input[name="beverages"]').serializeArray();
+            let beverages = $('#order_form').find('input[name="beverages"]').serializeArray();
             if(beverages.length === 0){
                 $('<input>').attr({
                     type: 'hidden',
@@ -1047,7 +1046,6 @@
             return JSON.parse($(this).val());
         }).get();
 
-        let order = {};
         // if the user clicks "Place Order" before "Add"
         if((beverages === undefined || beverages.length == 0 ) && (kitchen === undefined || kitchen.length == 0)){
 
@@ -1055,7 +1053,7 @@
             let item = $('#item_form').find('input[name="item"]').val();
             let name = $('#item_form').find('input[name="name"]').val();
             let price = $('#item_form').find('input[name="item_price"]').val();
-            let item_to_add = { 'item': item, 'price': price };
+            let item_to_add = { 'name': name, 'item': item, 'price': price };
 
             if(item_type == 'beverage'){
                 console.log('adding beverage');
@@ -1064,12 +1062,24 @@
                 kitchen.push(item_to_add);
             }
 
-            order.id = uuidv4();
-            order.commandType = 'placeOrderCommand';
-            order.baristaItems = { name: item_to_add };
-            //order.kitchenItems = kitchen;
-            console.log(JSON.stringify(order));
+        }
 
+        let order = {};
+        order.commandType = 'placeOrderCommand';
+        order.id = uuidv4();
+        order.baristaItems = [];
+        order.kitchenItems = []
+        if(beverages.length >= 1){
+            for (i = 0; i < beverages.length; i++) {
+                console.log(beverages[i]);
+                order.baristaItems.push(beverages[i]);
+            }
+        }
+        if(kitchen.length >= 1){
+            for (i = 0; i < kitchen.length; i++) {
+                console.log(kitchen[i]);
+                order.kitchenItems.push(kitchen[i]);
+            }
         }
 
         console.log(JSON.stringify(order));
@@ -1108,6 +1118,19 @@
         // prevent form submission
         event.preventDefault();
     });
+
+    function mapToObjectRec(m) {
+        let lo = {}
+        for(let[k,v] of m) {
+            if(v instanceof Map) {
+                lo[k] = mapToObjectRec(v)
+            }
+            else {
+                lo[k] = v
+            }
+        }
+        return lo
+    }
 
     // create a uuid for the order id
     function uuidv4() {

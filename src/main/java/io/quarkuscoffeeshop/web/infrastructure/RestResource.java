@@ -3,7 +3,6 @@ package io.quarkuscoffeeshop.web.infrastructure;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import io.quarkuscoffeeshop.web.domain.PlaceOrderCommandJson;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,10 +47,6 @@ public class RestResource {
     public Response orderIn(final PlaceOrderCommand placeOrderCommand) {
 
         logger.debug("order received: {}", toJson(placeOrderCommand));
-
-//        PlaceOrderCommand placeOrderCommand = new PlaceOrderCommand(OrderSource.WEB, placeOrderCommandJson.getBaristaItems(), placeOrderCommandJson.getKitchenItems());
-
-        logger.debug("placeOrderCommand: {}", toJson(placeOrderCommand));
 
         return orderService.placeOrder(placeOrderCommand)
             .handle((res, ex) -> {
