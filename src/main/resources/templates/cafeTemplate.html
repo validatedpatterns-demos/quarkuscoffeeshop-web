@@ -1069,6 +1069,7 @@
         order.id = uuidv4();
         order.baristaItems = [];
         order.kitchenItems = []
+        order.orderSource = 'WEB';
         if(beverages.length >= 1){
             for (i = 0; i < beverages.length; i++) {
                 console.log(beverages[i]);
