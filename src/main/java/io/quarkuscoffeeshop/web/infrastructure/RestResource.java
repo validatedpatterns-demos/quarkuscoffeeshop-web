@@ -35,7 +35,6 @@ public class RestResource {
     Jsonb jsonb = JsonbBuilder.create();
 
     @GET
-    @Path("cafe")
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance getIndex(){
         return cafeTemplate.data("sourceUrl", sourceUrl);

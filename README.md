@@ -51,5 +51,24 @@ You will need to create a connection to the Crunchy PostgreSQL database.  Use th
 
 The settings are not currently persisted across restarts so they will have to be recreated each time "docker-compose up" is run
 
+## Packaging the native application
+
+```shell
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true
+docker build -f src/main/docker/Dockerfile.native -t <<DOCKER_HUB_ID>>/quarkuscoffeeshop-web .
+export KAFKA_BOOTSTRAP_URLS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080
+docker run -i --network="host" -e KAFKA_BOOTSTRAP_URLS=${KAFKA_BOOTSTRAP_URLS} -e STREAM_URL=${STREAM_URL} -e CORS_ORIGINS=${CORS_ORIGINS} <<DOCKER_HUB_ID>>/quarkuscoffeeshop-counter:latest
+docker images -a | grep web
+docker tag <<RESULT>> <<DOCKER_HUB_ID>>/quarkuscoffeeshop-web:<<VERSION>>
+```
+## CHANGELOG
+
+3.2.0
+* Added "price" and "orderSource" as values to the JSON
+* Updated to new domain model
+
+3.1.0
+* refactored package "io.quarkuscoffeeshop.core" to "io.quarkuscoffeeshop.counter"
+* Added persistence for events in orders topic
 
 
