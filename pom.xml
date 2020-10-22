@@ -5,13 +5,13 @@
   <parent>
     <artifactId>quarkuscoffeeshop-parent</artifactId>
     <groupId>io.quarkuscoffeeshop</groupId>
-    <version>3.2.0-SNAPSHOT</version>
+    <version>3.2.0</version>
     <relativePath>../quarkuscoffeeshop-parent</relativePath>
   </parent>
 
   <groupId>io.quarkuscoffeeshop</groupId>
   <artifactId>quarkuscoffeeshop-web</artifactId>
-  <version>3.2.1-SNAPSHOT</version>
+  <version>3.2.0</version>
   <properties />
 
   <dependencyManagement />
@@ -20,7 +20,6 @@
     <dependency>
       <groupId>io.quarkuscoffeeshop</groupId>
       <artifactId>quarkuscoffeeshop-domain</artifactId>
-      <version>3.2.0-SNAPSHOT</version>
     </dependency>
     <!-- Testing -->
     <dependency>
