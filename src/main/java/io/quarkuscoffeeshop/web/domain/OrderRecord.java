@@ -9,16 +9,15 @@ import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
-//@Entity
-public class OrderRecord {//extends PanacheEntity {
 
-    String orderId;
+public class OrderRecord {
 
-    String orderSource = "WEB";
+    public String orderId;
 
-    String rewardsId = "";
+    public String orderSource = "WEB";
 
-//    @OneToMany(mappedBy = "orderRecord", cascade = CascadeType.ALL)
+    public String rewardsId;
+
     List<OrderLineItem> lineItems;
 
     public OrderRecord() {
@@ -31,7 +30,8 @@ public class OrderRecord {//extends PanacheEntity {
 
     public static OrderRecord createFromOrderInCommand(final OrderPlacedEvent orderPlacedEvent) {
         OrderRecord orderRecord = new OrderRecord(orderPlacedEvent.id);
-        orderRecord.rewardsId = orderPlacedEvent.rewardsId;
+        orderRecord.rewardsId = orderPlacedEvent.getRewardsId();
+        orderRecord.orderSource = orderPlacedEvent.getOrderSource().name();
         orderRecord.lineItems.addAll(orderPlacedEvent.getBeverages().stream().map(beverage -> {
             return new OrderLineItem(orderRecord, beverage.item, beverage.name);
         }).collect(Collectors.toList()));
@@ -48,7 +48,6 @@ public class OrderRecord {//extends PanacheEntity {
                 .add("orderSource='" + orderSource + "'")
                 .add("rewardsId='" + rewardsId + "'")
                 .add("lineItems=" + lineItems)
-//                .add("id=" + id)
                 .toString();
     }
 
