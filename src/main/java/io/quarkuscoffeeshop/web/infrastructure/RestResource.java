@@ -45,7 +45,7 @@ public class RestResource {
     @Transactional
     public Response orderIn(final PlaceOrderCommand placeOrderCommand) {
 
-        logger.debug("order received: {}", toJson(placeOrderCommand));
+        logger.debug("order received: {}", placeOrderCommand.toString());
 
         return orderService.placeOrder(placeOrderCommand)
             .handle((res, ex) -> {

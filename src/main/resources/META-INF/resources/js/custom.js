@@ -81,18 +81,21 @@ $(function() {
 
 
 
-$(window).scroll(function () {
+    $(window).scroll(function () {
 
-    var y = $(this).scrollTop();
+        var y = $(this).scrollTop();
 
-     $('nav a').each(function (event) {
-        if (y >= $($(this).attr('href')).offset().top - 75) {
-            $('nav a').not(this).removeClass('active');
-            $(this).addClass('active');
-         }
+        $('nav a').each(function (event) {
+            var element = $($(this).attr('href'));
+            if (element !== undefined && element.offset() !== undefined){
+                if (y >= element.offset().top - 75) {
+                    $('nav a').not(this).removeClass('active');
+                    $(this).addClass('active');
+                }
+            }
+        });
+
     });
-
-});
 
 
 
