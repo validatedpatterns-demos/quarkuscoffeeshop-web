@@ -6,7 +6,19 @@ Orders can be placed through the web UI or a REST endpoint "/order"
 
 ## Running locally
 
-See [Working Locally](../WORKING-LOCALLY.md) for details
+## Local Development
+
+__NOTE__: You have to install the domain objects to run the services and the test utilities to run the tests.  See [Building](building) 
+
+### Attaching a debugger
+
+By default Quarkus listensn on port 5005 for a debugger.  You can change this by appending the flag, "-Ddebug<<PORT NUMBER>>" as in the below examples.  The parameter is optional, of course
+
+### Web
+```shell script
+export KAFKA_BOOTSTRAP_URLS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080
+./mvnw clean compile quarkus:dev
+```
 
 ### Kafka and PostgreSQL
 This service depends on Kafka and PostgreSQL both of which are started by the Docker Compose file in the support project
