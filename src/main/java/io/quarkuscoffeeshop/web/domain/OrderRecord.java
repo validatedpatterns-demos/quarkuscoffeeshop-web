@@ -9,14 +9,15 @@ import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
-//@Entity
-public class OrderRecord {//extends PanacheEntity {
 
-    String orderId;
+public class OrderRecord {
 
-    String orderSource = "WEB";
+    public String orderId;
 
-//    @OneToMany(mappedBy = "orderRecord", cascade = CascadeType.ALL)
+    public String orderSource = "WEB";
+
+    public String rewardsId;
+
     List<OrderLineItem> lineItems;
 
     public OrderRecord() {
@@ -29,6 +30,8 @@ public class OrderRecord {//extends PanacheEntity {
 
     public static OrderRecord createFromOrderInCommand(final OrderPlacedEvent orderPlacedEvent) {
         OrderRecord orderRecord = new OrderRecord(orderPlacedEvent.id);
+        orderRecord.rewardsId = orderPlacedEvent.getRewardsId();
+        orderRecord.orderSource = orderPlacedEvent.getOrderSource().name();
         orderRecord.lineItems.addAll(orderPlacedEvent.getBeverages().stream().map(beverage -> {
             return new OrderLineItem(orderRecord, beverage.item, beverage.name);
         }).collect(Collectors.toList()));
@@ -43,8 +46,8 @@ public class OrderRecord {//extends PanacheEntity {
         return new StringJoiner(", ", OrderRecord.class.getSimpleName() + "[", "]")
                 .add("orderId='" + orderId + "'")
                 .add("orderSource='" + orderSource + "'")
+                .add("rewardsId='" + rewardsId + "'")
                 .add("lineItems=" + lineItems)
-//                .add("id=" + id)
                 .toString();
     }
 
@@ -60,6 +63,7 @@ public class OrderRecord {//extends PanacheEntity {
         return new EqualsBuilder()
                 .append(orderId, that.orderId)
                 .append(orderSource, that.orderSource)
+                .append(rewardsId, that.rewardsId)
                 .append(lineItems, that.lineItems)
                 .isEquals();
     }
@@ -69,6 +73,7 @@ public class OrderRecord {//extends PanacheEntity {
         return new HashCodeBuilder(17, 37)
                 .append(orderId)
                 .append(orderSource)
+                .append(rewardsId)
                 .append(lineItems)
                 .toHashCode();
     }
@@ -88,6 +93,12 @@ public class OrderRecord {//extends PanacheEntity {
     public void setOrderSource(String orderSource) {
         this.orderSource = orderSource;
     }
+
+    public String getRewardsId() {
+        return rewardsId;
+    }
+
+    public void setRewardsId(String rewardsId) { this.rewardsId = rewardsId; }
 
     public List<OrderLineItem> getLineItems() {
         return lineItems;

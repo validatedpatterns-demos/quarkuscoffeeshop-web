@@ -46,7 +46,7 @@ public class RestResource {
     @Path("order")
     public CompletionStage<Response> orderIn(final PlaceOrderCommand placeOrderCommand) {
 
-        logger.debug("order received: {}", toJson(placeOrderCommand));
+        logger.debug("order received: {}", placeOrderCommand.toString());
 
         return orderService.placeOrder(placeOrderCommand)
             .thenApply(res -> {
