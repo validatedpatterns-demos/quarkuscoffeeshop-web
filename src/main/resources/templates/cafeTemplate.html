@@ -82,29 +82,32 @@
 
 <div class="modal" id="rewardsModal">
     <div class="modal-dialog">
+        <form>
+
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">
                     Rewards Info
                 </h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button id="btn_cancel" type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body flex-fill d-inline-flex">
-                <div class="flex-fill d-inline-flex justify-content-end">
+                <div class="flex-fill d-inline-flex justify-content-end form-group">
                     <label for="rewards_id" class="mr-sm-2 input-cafe text-nowrap mb-2">Rewards email:</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter rewards email" id="rewards_id" rewards_id="rewards_id">
+                    <input type="email" required class="form-control mb-2 mr-sm-2" placeholder="Enter rewards email" id="rewards_id" rewards_id="rewards_id">
                 </div>
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
                 <div class="flex-fill">
-                    <button type="button" id="rewards_entered" class="btn-sm btn-primary pull-right" data-dismiss="modal">Done</button>
+                    <button type="submit" id="rewards_entered" class="btn-sm btn-primary pull-right">Done</button>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 </div>
 

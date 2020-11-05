@@ -344,7 +344,25 @@
         return result;
     }
 
+/*    $('#rewards_id').on('change', function() {
+
+        let validation = new RegExp(validations['email'][0]);
+        // validate the email value against the regular expression
+        if (!validation.test(this.value)){
+            // If the validation fails then we show the custom error message
+            this.setCustomValidity(validations['email'][1]);
+            $('#rewards_entered').disable();
+            $("#rewards_id").css({"background-color": "color"});
+        } else {
+            // This is really important. If the validation is successful you need to reset the custom error message
+            this.setCustomValidity('');
+            $('#rewards_entered').enable();
+        }
+
+    });*/
+
     $('#rewards_entered').on('click', function() {
+
         let rewards_id = $('#rewards_id').val();
         console.log("rewards email entered: " + rewards_id);
         $('#rewards_display_id').text(rewards_id);
