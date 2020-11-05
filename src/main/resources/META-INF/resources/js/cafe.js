@@ -361,12 +361,13 @@
 
     });*/
 
-    $('#rewards_entered').on('click', function() {
+    $('#rewards_modal').on('submit', function() {
 
         let rewards_id = $('#rewards_id').val();
         console.log("rewards email entered: " + rewards_id);
         $('#rewards_display_id').text(rewards_id);
         $.cookie('rewards_email',rewards_id, 10);
+        $('#btn_cancel').click();
     });
 
     $('#rewardsModal').on('shown.bs.modal', function() {
