@@ -15,6 +15,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.util.concurrent.CompletionStage;
+
 import static io.quarkuscoffeeshop.web.infrastructure.JsonUtil.toJson;
 
 @RegisterForReflection
@@ -42,20 +44,17 @@ public class RestResource {
 
     @POST
     @Path("order")
-    @Transactional
-    public Response orderIn(final PlaceOrderCommand placeOrderCommand) {
+    public CompletionStage<Response> orderIn(final PlaceOrderCommand placeOrderCommand) {
 
         logger.debug("order received: {}", placeOrderCommand.toString());
 
         return orderService.placeOrder(placeOrderCommand)
-            .handle((res, ex) -> {
-                if (ex != null) {
+            .thenApply(res -> {
+                return Response.accepted().entity(placeOrderCommand).build();
+            }).exceptionally(ex -> {
                     logger.error(ex.getMessage());
                     return Response.serverError().entity(ex).build();
-                }else{
-                    return Response.accepted().entity(placeOrderCommand).build();
-                }
-            }).join();
+            });
     }
 
 }
