@@ -60,7 +60,7 @@
                 <li><a href="#team">Team</a></li>
                 <li><a href="#testimonials">Twitter</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#rewardsModal">Rewards</a></li>
+                <li id="rewards_link" class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#rewardsModal">Rewards</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -93,8 +93,8 @@
             <!-- Modal body -->
             <div class="modal-body flex-fill d-inline-flex">
                 <div class="flex-fill d-inline-flex justify-content-end">
-                    <label for="rewards_id" class="mr-sm-2 input-cafe text-nowrap mb-2">Rewards ID:</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter rewards id" id="rewards_id" rewards_id="rewards_id">
+                    <label for="rewards_id" class="mr-sm-2 input-cafe text-nowrap mb-2">Rewards email:</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter rewards email" id="rewards_id" rewards_id="rewards_id">
                 </div>
             </div>
 
@@ -946,6 +946,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.matchHeight.js"></script>
+<script src="js/jquery.cookie.js"></script>
 <script src="js/custom.js"></script>
 <script src="js/cafe.js"></script>
 <script src="js/wow.js"></script>

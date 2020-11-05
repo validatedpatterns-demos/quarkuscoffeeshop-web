@@ -346,10 +346,22 @@
 
     $('#rewards_entered').on('click', function() {
         let rewards_id = $('#rewards_id').val();
-        console.log("rewards id entered: " + rewards_id);
+        console.log("rewards email entered: " + rewards_id);
         $('#rewards_display_id').text(rewards_id);
+        $.cookie('rewards_email',rewards_id, 10);
     });
 
     $('#rewardsModal').on('shown.bs.modal', function() {
         $('#rewards_id').focus();
+    });
+
+    $( document ).ready(function() {
+        let email = $.cookie('rewards_email');
+
+        if (email === undefined){
+            //nothing
+        }else{
+            $('#rewards_id').val(email);
+            $('#rewards_display_id').text(email);
+        }
     });
