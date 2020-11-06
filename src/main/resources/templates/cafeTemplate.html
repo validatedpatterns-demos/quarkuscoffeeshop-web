@@ -60,7 +60,7 @@
                 <li><a href="#team">Team</a></li>
                 <li><a href="#testimonials">Twitter</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#rewardsModal">Rewards</a></li>
+                <li id="rewards_link" class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#rewardsModal">Rewards</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -82,29 +82,32 @@
 
 <div class="modal" id="rewardsModal">
     <div class="modal-dialog">
+        <form id="rewards_modal">
+
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">
                     Rewards Info
                 </h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button id="btn_cancel" type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body flex-fill d-inline-flex">
-                <div class="flex-fill d-inline-flex justify-content-end">
-                    <label for="rewards_id" class="mr-sm-2 input-cafe text-nowrap mb-2">Rewards ID:</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter rewards id" id="rewards_id" rewards_id="rewards_id">
+                <div class="flex-fill d-inline-flex justify-content-end form-group">
+                    <label for="rewards_id" class="mr-sm-2 input-cafe text-nowrap mb-2">Rewards email:</label>
+                    <input type="email" required class="form-control mb-2 mr-sm-2" placeholder="Enter rewards email" id="rewards_id" rewards_id="rewards_id">
                 </div>
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
                 <div class="flex-fill">
-                    <button type="button" id="rewards_entered" class="btn-sm btn-primary pull-right" data-dismiss="modal">Done</button>
+                    <button type="submit" id="rewards_entered" class="btn-sm btn-primary pull-right">Done</button>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 </div>
 
@@ -946,6 +949,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.matchHeight.js"></script>
+<script src="js/jquery.cookie.js"></script>
 <script src="js/custom.js"></script>
 <script src="js/cafe.js"></script>
 <script src="js/wow.js"></script>

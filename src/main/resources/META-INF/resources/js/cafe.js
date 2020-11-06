@@ -344,12 +344,43 @@
         return result;
     }
 
-    $('#rewards_entered').on('click', function() {
+/*    $('#rewards_id').on('change', function() {
+
+        let validation = new RegExp(validations['email'][0]);
+        // validate the email value against the regular expression
+        if (!validation.test(this.value)){
+            // If the validation fails then we show the custom error message
+            this.setCustomValidity(validations['email'][1]);
+            $('#rewards_entered').disable();
+            $("#rewards_id").css({"background-color": "color"});
+        } else {
+            // This is really important. If the validation is successful you need to reset the custom error message
+            this.setCustomValidity('');
+            $('#rewards_entered').enable();
+        }
+
+    });*/
+
+    $('#rewards_modal').on('submit', function() {
+
         let rewards_id = $('#rewards_id').val();
-        console.log("rewards id entered: " + rewards_id);
+        console.log("rewards email entered: " + rewards_id);
         $('#rewards_display_id').text(rewards_id);
+        $.cookie('rewards_email',rewards_id, 10);
+        $('#btn_cancel').click();
     });
 
     $('#rewardsModal').on('shown.bs.modal', function() {
         $('#rewards_id').focus();
+    });
+
+    $( document ).ready(function() {
+        let email = $.cookie('rewards_email');
+
+        if (email === undefined){
+            //nothing
+        }else{
+            $('#rewards_id').val(email);
+            $('#rewards_display_id').text(email);
+        }
     });
