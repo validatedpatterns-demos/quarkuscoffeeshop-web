@@ -28,6 +28,9 @@ public class RestResource {
     @ConfigProperty(name="sourceUrl")
     String sourceUrl;
 
+    @ConfigProperty(name="storeId")
+    String storeId;
+
     @Inject
     OrderService orderService;
 
@@ -39,7 +42,10 @@ public class RestResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance getIndex(){
-        return cafeTemplate.data("sourceUrl", sourceUrl);
+
+        return cafeTemplate
+                .data("sourceUrl", sourceUrl)
+                .data("storeId", storeId);
     }
 
     @POST

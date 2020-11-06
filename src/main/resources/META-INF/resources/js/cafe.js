@@ -1,3 +1,6 @@
+    const appvalues = document.querySelector('#appvalues');
+    const storeId = appvalues.dataset.storeId;
+
     /* Display the modal popup with selected data */
     $('#myModal').on('show.bs.modal', function (event) {
 
@@ -144,6 +147,7 @@
         order.commandType = 'PLACE_ORDER';
         order.id = uuidv4();
         order.orderSource = 'WEB';
+        order.storeId = storeId;
         order.rewardsId = rewards_id;
         order.baristaItems = [];
         order.kitchenItems = []
