@@ -1,5 +1,6 @@
     const appvalues = document.querySelector('#appvalues');
     const storeId = appvalues.dataset.storeId;
+    const streamUrl = appvalues.dataset.streamUrl;
 
     /* Display the modal popup with selected data */
     $('#myModal').on('show.bs.modal', function (event) {
@@ -227,7 +228,7 @@
     $(function () {
         /*          var source = new EventSource("http://quarkus-cafe-web-quarkus-cafe.apps.cluster-virtual-1b57.virtual-1b57.sandbox1482.opentlc.com/dashboard/stream"); */
 
-        var source = new EventSource("http://localhost:8080/dashboard/stream");
+        var source = new EventSource(streamUrl);
         source.onmessage = function(e) {
             console.log(e);
             var state = JSON.parse(e.data);

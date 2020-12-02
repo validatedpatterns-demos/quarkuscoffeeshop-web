@@ -25,8 +25,8 @@ public class RestResource {
 
     Logger logger = LoggerFactory.getLogger(RestResource.class);
 
-    @ConfigProperty(name="sourceUrl")
-    String sourceUrl;
+    @ConfigProperty(name="streamUrl")
+    String streamUrl;
 
     @ConfigProperty(name="storeId")
     String storeId;
@@ -44,7 +44,7 @@ public class RestResource {
     public TemplateInstance getIndex(){
 
         return cafeTemplate
-                .data("sourceUrl", sourceUrl)
+                .data("streamUrl", streamUrl)
                 .data("storeId", storeId);
     }
 
