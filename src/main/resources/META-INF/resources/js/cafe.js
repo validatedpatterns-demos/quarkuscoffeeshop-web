@@ -1,3 +1,7 @@
+    const appvalues = document.querySelector('#appvalues');
+    const storeId = appvalues.dataset.storeId;
+    const streamUrl = appvalues.dataset.streamUrl;
+
     /* Display the modal popup with selected data */
     $('#myModal').on('show.bs.modal', function (event) {
 
