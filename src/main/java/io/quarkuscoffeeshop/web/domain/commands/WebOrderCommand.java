@@ -35,7 +35,7 @@ public class WebOrderCommand {
         if (placeOrderCommand.getKitchenItems().isPresent()) {
             this.kitchenLineItems = new ArrayList<>();
             placeOrderCommand.getKitchenItems().get().forEach(kitchenLineItem -> {
-                this.baristaLineItems.add(new LineItem(kitchenLineItem.getItem(), kitchenLineItem.getName(), this.id));
+                this.kitchenLineItems.add(new LineItem(kitchenLineItem.getItem(), kitchenLineItem.getName(), this.id));
             });
         }
     }

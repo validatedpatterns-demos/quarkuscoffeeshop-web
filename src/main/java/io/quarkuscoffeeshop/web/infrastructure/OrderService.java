@@ -26,9 +26,13 @@ public class OrderService {
     Emitter<String> ordersOutEmitter;
 
     public CompletableFuture<Void> placeOrder(final PlaceOrderCommand placeOrderCommand){
+
         logger.debug("PlaceOrderCommandReceived: {}", placeOrderCommand);
+
         WebOrderCommand webOrderCommand = new WebOrderCommand(placeOrderCommand);
+
         logger.debug("WebOrderCommand: {}", webOrderCommand);
+
         return ordersOutEmitter.send(toJson(webOrderCommand))
             .whenComplete((result, ex) -> {
                 logger.debug("order sent: {}", placeOrderCommand);
