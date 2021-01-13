@@ -1,22 +1,26 @@
 package io.quarkuscoffeeshop.web.infrastructure;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 
 @RegisterForReflection
 public class JsonUtil {
 
     static Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
-    static final Jsonb jsonb = JsonbBuilder.create();
+    static final ObjectMapper objectMapper = new ObjectMapper();
 
     static String toJson(final Object object) {
         logger.debug("marshalling {} to JSON", object.toString());
-        return jsonb.toJson(object);
+        try {
+            return objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            logger.error(e.getMessage());
+            return "{ \"error\" : \"" + e.getMessage() + "\" }";
+        }
     }
 
 }

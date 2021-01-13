@@ -22,21 +22,26 @@ public class WebOrderCommand {
 
     private List<LineItem> kitchenLineItems;
 
-    private final Instant timestamp = Instant.now();
-
     public WebOrderCommand(final PlaceOrderCommand placeOrderCommand) {
+
         this.id = placeOrderCommand.getId();
+
         if (placeOrderCommand.getBaristaItems().isPresent()) {
             this.baristaLineItems = new ArrayList<>();
             placeOrderCommand.getBaristaItems().get().forEach(baristaLineItem -> {
                 this.baristaLineItems.add(new LineItem(baristaLineItem.getItem(), baristaLineItem.getName(), this.id));
             });
         }
+
         if (placeOrderCommand.getKitchenItems().isPresent()) {
             this.kitchenLineItems = new ArrayList<>();
             placeOrderCommand.getKitchenItems().get().forEach(kitchenLineItem -> {
                 this.kitchenLineItems.add(new LineItem(kitchenLineItem.getItem(), kitchenLineItem.getName(), this.id));
             });
+        }
+
+        if (placeOrderCommand.getRewardsId().isPresent()) {
+            this.loyaltyMemberId = placeOrderCommand.getRewardsId().get();
         }
     }
 
@@ -49,9 +54,9 @@ public class WebOrderCommand {
                 .add("loyaltyMemberId='" + loyaltyMemberId + "'")
                 .add("baristaLineItems=" + baristaLineItems)
                 .add("kitchenLineItems=" + kitchenLineItems)
-                .add("timestamp=" + timestamp)
                 .toString();
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -67,9 +72,7 @@ public class WebOrderCommand {
             return false;
         if (baristaLineItems != null ? !baristaLineItems.equals(that.baristaLineItems) : that.baristaLineItems != null)
             return false;
-        if (kitchenLineItems != null ? !kitchenLineItems.equals(that.kitchenLineItems) : that.kitchenLineItems != null)
-            return false;
-        return timestamp != null ? timestamp.equals(that.timestamp) : that.timestamp == null;
+        return kitchenLineItems != null ? kitchenLineItems.equals(that.kitchenLineItems) : that.kitchenLineItems == null;
     }
 
     @Override
@@ -80,7 +83,6 @@ public class WebOrderCommand {
         result = 31 * result + (loyaltyMemberId != null ? loyaltyMemberId.hashCode() : 0);
         result = 31 * result + (baristaLineItems != null ? baristaLineItems.hashCode() : 0);
         result = 31 * result + (kitchenLineItems != null ? kitchenLineItems.hashCode() : 0);
-        result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
         return result;
     }
 
@@ -106,9 +108,5 @@ public class WebOrderCommand {
 
     public List<LineItem> getKitchenLineItems() {
         return kitchenLineItems;
-    }
-
-    public Instant getTimestamp() {
-        return timestamp;
     }
 }
