@@ -232,9 +232,9 @@
         source.onmessage = function(e) {
             console.log(e);
             var state = JSON.parse(e.data);
-            if(state.status=="IN_QUEUE")
+            if(state.status=="IN_PROGRESS")
                 $("tbody").append(line(state));
-            if(state.status=="READY"){
+            if(state.status=="FULFILLED"){40
                 console.log(state);
 //              $("#"+state.itemId).replaceWith(line(state));
 //              setTimeout(cleanup(state.itemId), 15000);
