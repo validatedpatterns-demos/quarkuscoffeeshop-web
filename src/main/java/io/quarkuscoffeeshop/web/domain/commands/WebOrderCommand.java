@@ -1,9 +1,8 @@
 package io.quarkuscoffeeshop.web.domain.commands;
 
+import io.quarkuscoffeeshop.domain.OrderLineItem;
 import io.quarkuscoffeeshop.domain.PlaceOrderCommand;
-import io.quarkuscoffeeshop.web.domain.LineItem;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
@@ -14,34 +13,34 @@ public class WebOrderCommand {
 
     private final String orderSource = "WEB";
 
-    private String location = "ATLANTA";
+    private final String location = "ATLANTA";
 
-    private String loyaltyMemberId;
+    private final String loyaltyMemberId;
 
-    private List<LineItem> baristaLineItems;
+    private final List<OrderLineItem> baristaLineItems;
 
-    private List<LineItem> kitchenLineItems;
+    private final List<OrderLineItem> kitchenLineItems;
 
     public WebOrderCommand(final PlaceOrderCommand placeOrderCommand) {
 
         this.id = placeOrderCommand.getId();
 
         if (placeOrderCommand.getBaristaItems().isPresent()) {
-            this.baristaLineItems = new ArrayList<>();
-            placeOrderCommand.getBaristaItems().get().forEach(baristaLineItem -> {
-                this.baristaLineItems.add(new LineItem(baristaLineItem.getItem(), baristaLineItem.getName(), this.id));
-            });
+            this.baristaLineItems = placeOrderCommand.getBaristaItems().get();
+        }else{
+            this.baristaLineItems = new ArrayList<>(0);
         }
 
         if (placeOrderCommand.getKitchenItems().isPresent()) {
-            this.kitchenLineItems = new ArrayList<>();
-            placeOrderCommand.getKitchenItems().get().forEach(kitchenLineItem -> {
-                this.kitchenLineItems.add(new LineItem(kitchenLineItem.getItem(), kitchenLineItem.getName(), this.id));
-            });
+            this.kitchenLineItems = placeOrderCommand.getKitchenItems().get();
+        }else {
+            this.kitchenLineItems = new ArrayList<>(0);
         }
 
         if (placeOrderCommand.getRewardsId().isPresent()) {
             this.loyaltyMemberId = placeOrderCommand.getRewardsId().get();
+        }else{
+            this.loyaltyMemberId = null;
         }
     }
 
@@ -102,11 +101,11 @@ public class WebOrderCommand {
         return loyaltyMemberId;
     }
 
-    public List<LineItem> getBaristaLineItems() {
+    public List<OrderLineItem> getBaristaLineItems() {
         return baristaLineItems;
     }
 
-    public List<LineItem> getKitchenLineItems() {
+    public List<OrderLineItem> getKitchenLineItems() {
         return kitchenLineItems;
     }
 }

@@ -2,6 +2,7 @@ package io.quarkuscoffeeshop.web.domain;
 
 import io.quarkuscoffeeshop.domain.Item;
 
+import java.math.BigDecimal;
 import java.util.StringJoiner;
 
 public class LineItem {
@@ -12,7 +13,9 @@ public class LineItem {
 
     String orderId;
 
-    public LineItem(Item item, String name, String orderId) {
+    BigDecimal price;
+
+    public LineItem(Item item, String name, String orderId, BigDecimal price) {
         this.item = item;
         this.name = name;
         this.orderId = orderId;
