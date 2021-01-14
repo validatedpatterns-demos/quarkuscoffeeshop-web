@@ -37,18 +37,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- Application Domain -->
-      <dependency>
-        <groupId>io.quarkuscoffeeshop</groupId>
-        <artifactId>quarkuscoffeeshop-domain</artifactId>
-        <version>${coffeeshop-domain.version}</version>
-      </dependency>
-      <!-- Application Testing -->
-      <dependency>
-        <groupId>io.quarkuscoffeeshop</groupId>
-        <artifactId>quarkuscoffeeshop-testutils</artifactId>
-        <version>${coffeeshop-testutils.version}</version>
-      </dependency>
       <!-- Testing -->
       <dependency>
         <groupId>org.apache.kafka</groupId>
@@ -118,11 +106,6 @@
       <artifactId>quarkus-container-image-jib</artifactId>
     </dependency>
     <!-- Testing -->
-    <dependency>
-      <groupId>io.quarkuscoffeeshop</groupId>
-      <artifactId>quarkuscoffeeshop-testutils</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
