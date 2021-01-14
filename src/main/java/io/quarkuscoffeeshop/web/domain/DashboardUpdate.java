@@ -1,69 +1,44 @@
 package io.quarkuscoffeeshop.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.quarkuscoffeeshop.domain.*;
 import io.quarkus.runtime.annotations.RegisterForReflection;
+
+import java.util.Optional;
 
 @RegisterForReflection
 public class DashboardUpdate {
 
-    public String orderId;
+    public final String orderId;
 
-    public String itemId;
+    public final String itemId;
 
-    public String name;
+    public final String name;
 
-    public Item item;
+    public final Item item;
 
-    public OrderStatus status;
+    public final OrderStatus status;
 
-    public DashboardUpdate(String orderId, String name, Item item, String itemId, OrderStatus status) {
+    public final String madeBy;
+
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public DashboardUpdate(
+            @JsonProperty("orderId") final String orderId,
+            @JsonProperty("itemId") String itemId,
+            @JsonProperty("name") String name,
+            @JsonProperty("item") Item item,
+            @JsonProperty("status") OrderStatus status,
+            @JsonProperty("madeBy") Optional<String> madeBy) {
         this.orderId = orderId;
         this.itemId = itemId;
         this.name = name;
         this.item = item;
         this.status = status;
-    }
-
-    public DashboardUpdate() {
-    }
-
-    public DashboardUpdate(final LineItemEvent orderEvent) {
-        this.orderId = orderEvent.orderId;
-        this.itemId = orderEvent.itemId;
-        this.name = orderEvent.name;
-        this.item = orderEvent.item;
-        switch (orderEvent.eventType) {
-            case BEVERAGE_ORDER_IN:
-                this.status = OrderStatus.IN_QUEUE;
-                break;
-            case KITCHEN_ORDER_IN:
-                this.status = OrderStatus.IN_QUEUE;
-                break;
-            case BEVERAGE_ORDER_UP:
-                this.status = OrderStatus.READY;
-                break;
-            case KITCHEN_ORDER_UP:
-                this.status = OrderStatus.READY;
-                break;
-            default:
-                this.status = OrderStatus.IN_QUEUE;
+        if (madeBy.isPresent()) {
+            this.madeBy = madeBy.get();
+        }else{
+            this.madeBy = "";
         }
-    }
-
-    @Override
-    public String toString() {
-        return new StringBuilder().append("DashboardUpdate[")
-                .append("orderId=")
-                .append(orderId)
-                .append(",itemId=")
-                .append(itemId)
-                .append(",name=")
-                .append(name)
-                .append(",item=")
-                .append(item)
-                .append(",status=")
-                .append(status)
-                .append("]").toString();
-
     }
 }

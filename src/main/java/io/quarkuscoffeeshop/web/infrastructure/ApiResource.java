@@ -23,10 +23,11 @@ public class ApiResource {
     public Response getCreateOrderCommandJson() {
         DashboardUpdate dashboardUpdate = new DashboardUpdate(
                 UUID.randomUUID().toString(),
+                UUID.randomUUID().toString(),
                 "Jeremy",
                 Item.CROISSANT,
-                UUID.randomUUID().toString(),
-                OrderStatus.IN_QUEUE);
+                OrderStatus.IN_QUEUE,
+                null);
         return Response.ok().entity(dashboardUpdate).build();
     }
 }

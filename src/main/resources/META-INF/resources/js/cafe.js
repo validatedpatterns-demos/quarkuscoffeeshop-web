@@ -232,9 +232,9 @@
         source.onmessage = function(e) {
             console.log(e);
             var state = JSON.parse(e.data);
-            if(state.orderStatus=="IN_PROGRESS")
+            if(state.status=="IN_PROGRESS")
                 $("tbody").append(line(state));
-            if(state.orderStatus=="FULFILLED"){40
+            if(state.status=="FULFILLED"){40
                 console.log(state);
 //              $("#"+state.itemId).replaceWith(line(state));
 //              setTimeout(cleanup(state.itemId), 15000);
@@ -277,7 +277,10 @@
 
     /* Display friendly prepared by or nothing */
     function displayFriendlyPreparedBy(value){
-        return value === undefined ? "" : value;
+        return value === undefined ? ""
+            : value === null ? ""
+            : value === 'null' ? ""
+            : value;
     }
 
     /* Display friendly product names
@@ -335,12 +338,12 @@
     function displayFriendlyStatus(status){
         let result;
         switch(status){
-            case "IN_QUEUE":
+            case "IN_PROGRESS":
                 console.log("In progress");
                 result = "In progress";
                 break;
-            case "READY":
-                console.log("Ready");
+            case "FULFILLED":
+                console.log("Ready!");
                 result = "Ready";
                 break;
             default:
