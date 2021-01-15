@@ -13,7 +13,7 @@ public class WebOrderCommand {
 
     private final String orderSource = "WEB";
 
-    private final String location = "ATLANTA";
+    private final String location;
 
     private final String loyaltyMemberId;
 
@@ -24,6 +24,7 @@ public class WebOrderCommand {
     public WebOrderCommand(final PlaceOrderCommand placeOrderCommand) {
 
         this.id = placeOrderCommand.getId();
+        this.location = placeOrderCommand.getStoreId();
 
         if (placeOrderCommand.getBaristaItems().isPresent()) {
             this.baristaLineItems = placeOrderCommand.getBaristaItems().get();

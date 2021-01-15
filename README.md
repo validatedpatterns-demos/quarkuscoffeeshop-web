@@ -16,7 +16,7 @@ By default Quarkus listensn on port 5005 for a debugger.  You can change this by
 
 ### Web
 ```shell script
-export KAFKA_BOOTSTRAP_URLS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080
+export KAFKA_BOOTSTRAP_URLS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080 STORE_ID=CHARLOTTE
 ./mvnw clean compile quarkus:dev
 ```
 
