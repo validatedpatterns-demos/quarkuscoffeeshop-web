@@ -240,8 +240,17 @@
 //              setTimeout(cleanup(state.itemId), 15000);
                 display(state);
             }
-
         };
+
+        // Loyalty toast notification
+        var loyaltySource = new EventSource("http://localhost:8080/dashboard/loyalty-stream");
+        loyaltySource.onmessage = function(e) {
+            console.log(e);
+            var localtyReward = JSON.parse(e.data);
+            $('#rewardReceivedText').text("You have won a free " + localtyReward.reward + "!")
+            $('#rewardReceivedText').toast('show');
+        };
+
     });
 
     function display(state){
