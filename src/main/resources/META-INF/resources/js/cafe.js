@@ -243,12 +243,31 @@
         };
 
         // Loyalty toast notification
-        var loyaltySource = new EventSource("http://localhost:8080/dashboard/loyalty-stream");
+        var loyaltySource = new EventSource("http://localhost:8080/dashboard/loyaltystream");
         loyaltySource.onmessage = function(e) {
             console.log(e);
             var localtyReward = JSON.parse(e.data);
-            $('#rewardReceivedText').text("You have won a free " + localtyReward.reward + "!")
-            $('#rewardReceivedText').toast('show');
+            var rewardTest = "You have won a free " + localtyReward.reward + "!"
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "15000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr["success"](rewardTest)
         };
 
     });
