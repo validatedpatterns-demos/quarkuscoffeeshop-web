@@ -223,10 +223,10 @@
         });
     }
 
-    // Status Board
     $(function () {
         /*          var source = new EventSource("http://quarkus-cafe-web-quarkus-cafe.apps.cluster-virtual-1b57.virtual-1b57.sandbox1482.opentlc.com/dashboard/stream"); */
 
+        // Status Board
         var source = new EventSource("http://localhost:8080/dashboard/stream");
         source.onmessage = function(e) {
             console.log(e);
@@ -241,6 +241,16 @@
             }
 
         };
+
+        // Loyalty toast notification
+        var loyaltySource = new EventSource("http://localhost:8080/loyaltyupdates");
+        loyaltySource.onmessage = function(e) {
+            console.log(e);
+            var localtyReward = JSON.parse(e.data);
+            $('#rewardReceivedText').text("You have won a free " + localtyReward + "!")
+            $('#rewardReceivedText').toast('show');
+        };
+
     });
 
     function display(state){
