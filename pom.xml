@@ -5,7 +5,7 @@
 
   <groupId>io.quarkuscoffeeshop</groupId>
   <artifactId>quarkuscoffeeshop-web</artifactId>
-  <version>5.0.1-SNAPSHOT</version>
+  <version>5.0.2-SNAPSHOT</version>
   <properties>
     <!-- generated -->
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
