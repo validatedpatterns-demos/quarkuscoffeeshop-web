@@ -26,6 +26,9 @@ public class RestResource {
     @ConfigProperty(name="streamUrl")
     String streamUrl;
 
+    @ConfigProperty(name="loyaltyStreamUrl")
+    String loyaltyStreamUrl;
+
     @ConfigProperty(name="storeId")
     String storeId;
 
@@ -41,6 +44,7 @@ public class RestResource {
 
         return cafeTemplate
                 .data("streamUrl", streamUrl)
+                .data("loyaltyStreamUrl", loyaltyStreamUrl)
                 .data("storeId", storeId);
     }
 
