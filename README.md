@@ -1,3 +1,6 @@
+# Docs
+Please see the Github Pages Site for complete documentation: [quarkuscoffeeshop.github.io](https://quarkuscoffeeshop.github.io)
+
 # quarkus-cafe-web
 
 This is the web frontend for the Quarkus Coffeeshop Application
