@@ -1,6 +1,7 @@
     const appvalues = document.querySelector('#appvalues');
     const storeId = appvalues.dataset.storeId;
     const streamUrl = appvalues.dataset.streamUrl;
+    const loyaltyStreamUrl = appvalues.dataset.loyaltyStreamUrl;
 
     /* Display the modal popup with selected data */
     $('#myModal').on('show.bs.modal', function (event) {
@@ -243,7 +244,7 @@
         };
 
         // Loyalty toast notification
-        var loyaltySource = new EventSource("http://localhost:8080/dashboard/loyaltystream");
+        var loyaltySource = new EventSource(loyaltyStreamUrl);
         loyaltySource.onmessage = function(e) {
             console.log(e);
             var localtyReward = JSON.parse(e.data);
