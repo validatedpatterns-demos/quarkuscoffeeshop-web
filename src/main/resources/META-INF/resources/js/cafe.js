@@ -333,7 +333,7 @@
                 break;
             case "ESPRESSO":
                 console.log("Espresso");
-                result = Espresso
+                result = "Espresso";
                 break;
             case "ESPRESSO_DOUBLE":
                 console.log("Double Espresso");
