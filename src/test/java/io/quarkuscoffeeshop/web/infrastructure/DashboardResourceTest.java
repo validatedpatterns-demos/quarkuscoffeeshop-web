@@ -1,13 +1,12 @@
 package io.quarkuscoffeeshop.web.infrastructure;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkuscoffeeshop.domain.Item;
 import io.quarkuscoffeeshop.domain.OrderStatus;
 import io.quarkuscoffeeshop.web.domain.DashboardUpdate;
-import io.quarkuscoffeeshop.web.testing.KafkaTestResource;
+import io.quarkuscoffeeshop.web.infrastructure.testsupport.KafkaTestResource;
 import io.smallrye.reactive.messaging.connectors.InMemoryConnector;
 import io.smallrye.reactive.messaging.connectors.InMemorySource;
 import org.junit.jupiter.api.Test;
@@ -19,19 +18,16 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.is;
 
-import static io.restassured.RestAssured.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
