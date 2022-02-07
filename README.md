@@ -1,52 +1,57 @@
 # Docs
 Please see the Github Pages Site for complete documentation: [quarkuscoffeeshop.github.io](https://quarkuscoffeeshop.github.io)
 
-# quarkus-cafe-web
+# Quarkus
+
+If you have not used Quarkus before: https://quarkus.io/
+
+# quarkuscofeeshop-web
 
 This is the web frontend for the Quarkus Coffeeshop Application
 
 Orders can be placed through the web UI or a REST endpoint "/order"
 
-## Running locally
-
 ## Local Development
 
-__NOTE__: You have to install the domain objects to run the services and the test utilities to run the tests.  See [Building](building) 
+You will need to start the supporting services, Kafka and PostgreSQL, from the [quarkuscoffeeshop-support](https://github.com/quarkuscoffeeshop/quarkuscoffeeshop-support.git) project:
 
-### Attaching a debugger
-
-By default Quarkus listensn on port 5005 for a debugger.  You can change this by appending the flag, "-Ddebug<<PORT NUMBER>>" as in the below examples.  The parameter is optional, of course
-
-### Web
-```shell script
-export KAFKA_BOOTSTRAP_URLS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080 STORE_ID=CHARLOTTE
-./mvnw clean compile quarkus:dev
+```shell
+git clone https://github.com/quarkuscoffeeshop/quarkuscoffeeshop-support.git
 ```
 
-### Kafka and PostgreSQL
-This service depends on Kafka and PostgreSQL both of which are started by the Docker Compose file in the support project
+The services can be started with Docker compose from within the quarkuscoffeeshop-support directory:
+
+```shell
+docker compose up
+```
 
 ### Environment Variables
 
-This services uses the following environment variables:
+This services uses the following environment variables, all of which are set in development mode:
 * KAFKA_BOOTSTRAP_SERVERS
 * STREAM_URL
 * CORS_ORIGINS
 
-You can set them for local development with the following:
+If you wish to override these you can set them with the following:
 
 ```shell script
-export KAFKA_BOOTSTRAP_SERVERS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080
+export KAFKA_BOOTSTRAP_SERVERS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080 STORE_ID=ATLANTA
 ```
 
-### Running Locally
-```shell
-export KAFKA_BOOTSTRAP_URLS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080
-./mvnw clean package -Pnative -Dquarkus.native.container-build=true
-docker build -f src/main/docker/Dockerfile.native -t <<DOCKER_HUB_ID>>/quarkuscoffeeshop-web .
-docker run -i --network="host" -e STREAM_URL=${STREAM_URL} -e CORS_ORIGINS=${CORS_ORIGINS} -e KAFKA_BOOTSTRAP_URLS=${KAFKA_BOOTSTRAP_URLS} <<DOCKER_ID>>/quarkuscoffeeshop-web:latest
-docker images -a | grep web
-docker tag <<RESULT>> <<DOCKER_HUB_ID>>/quarkus-cafe-web:<<VERSION>>
+### Starting the app
+
+You can start the app in Quarkus dev mode with:
+
+```shell script
+./mvnw clean compile quarkus:dev
+```
+
+### Attaching a debugger
+
+By default Quarkus listens on port 5005 for a debugger.  You can change this by appending the flag, "-Ddebug<<PORT NUMBER>>" as in the below examples.  The parameter is optional, of course
+
+```shell script
+./mvnw clean compile quarkus:dev -Ddebug=5006
 ```
 
 ### pgAdmin
@@ -76,14 +81,14 @@ docker run -i --network="host" -e KAFKA_BOOTSTRAP_URLS=${KAFKA_BOOTSTRAP_URLS} -
 docker images -a | grep web
 docker tag <<RESULT>> <<DOCKER_HUB_ID>>/quarkuscoffeeshop-web:<<VERSION>>
 ```
-## CHANGELOG
 
-3.2.0
-* Added "price" and "orderSource" as values to the JSON
-* Updated to new domain model
-
-3.1.0
-* refactored package "io.quarkuscoffeeshop.core" to "io.quarkuscoffeeshop.counter"
-* Added persistence for events in orders topic
-
+### Running Locally in Native Mode
+```shell
+export KAFKA_BOOTSTRAP_URLS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true
+docker build -f src/main/docker/Dockerfile.native -t <<DOCKER_HUB_ID>>/quarkuscoffeeshop-web .
+docker run -i --network="host" -e STREAM_URL=${STREAM_URL} -e CORS_ORIGINS=${CORS_ORIGINS} -e KAFKA_BOOTSTRAP_URLS=${KAFKA_BOOTSTRAP_URLS} <<DOCKER_ID>>/quarkuscoffeeshop-web:latest
+docker images -a | grep web
+docker tag <<RESULT>> <<DOCKER_HUB_ID>>/quarkus-cafe-web:<<VERSION>>
+```
 
