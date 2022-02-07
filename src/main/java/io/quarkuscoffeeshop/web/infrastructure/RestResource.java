@@ -3,7 +3,7 @@ package io.quarkuscoffeeshop.web.infrastructure;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import io.quarkuscoffeeshop.domain.PlaceOrderCommand;
+import io.quarkuscoffeeshop.web.domain.commands.PlaceOrderCommand;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

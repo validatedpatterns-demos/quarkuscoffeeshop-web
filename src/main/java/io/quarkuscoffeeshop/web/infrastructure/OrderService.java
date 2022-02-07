@@ -2,12 +2,13 @@ package io.quarkuscoffeeshop.web.infrastructure;
 
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import io.quarkuscoffeeshop.web.domain.commands.PlaceOrderCommand;
 import io.quarkuscoffeeshop.web.domain.commands.WebOrderCommand;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import io.quarkuscoffeeshop.domain.*;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 

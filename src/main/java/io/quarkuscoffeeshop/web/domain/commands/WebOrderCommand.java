@@ -1,7 +1,6 @@
 package io.quarkuscoffeeshop.web.domain.commands;
 
 import io.quarkuscoffeeshop.domain.OrderLineItem;
-import io.quarkuscoffeeshop.domain.PlaceOrderCommand;
 
 import java.util.ArrayList;
 import java.util.List;

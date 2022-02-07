@@ -1,6 +1,9 @@
-package io.quarkuscoffeeshop.domain;
+package io.quarkuscoffeeshop.web.domain.commands;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import io.quarkuscoffeeshop.domain.CommandType;
+import io.quarkuscoffeeshop.domain.OrderLineItem;
+import io.quarkuscoffeeshop.domain.OrderSource;
 
 import java.math.BigDecimal;
 import java.util.List;
