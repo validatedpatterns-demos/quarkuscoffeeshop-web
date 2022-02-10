@@ -27,6 +27,7 @@ public class PlaceOrderCommand {
     }
 
     public PlaceOrderCommand(String id, String storeId, OrderSource orderSource, String rewardsId, List<OrderLineItem> baristaItems, List<OrderLineItem> kitchenItems, BigDecimal total) {
+        this.id = id;
         this.orderSource = orderSource;
         this.storeId = storeId;
         this.rewardsId = rewardsId;
