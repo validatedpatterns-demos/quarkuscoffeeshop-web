@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class KafkaTestResource  implements QuarkusTestResourceLifecycleManager {
+
     @Override
     public Map<String, String> start() {
         Map<String, String> env = new HashMap<>();

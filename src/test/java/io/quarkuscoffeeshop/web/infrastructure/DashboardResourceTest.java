@@ -7,7 +7,9 @@ import io.quarkuscoffeeshop.domain.Item;
 import io.quarkuscoffeeshop.domain.OrderStatus;
 import io.quarkuscoffeeshop.web.domain.DashboardUpdate;
 import io.quarkuscoffeeshop.web.infrastructure.testsupport.KafkaTestResource;
+import io.restassured.http.ContentType;
 import io.smallrye.reactive.messaging.connectors.InMemoryConnector;
+import io.smallrye.reactive.messaging.connectors.InMemorySink;
 import io.smallrye.reactive.messaging.connectors.InMemorySource;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -25,14 +27,16 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
+import static io.restassured.RestAssured.when;
 import static org.awaitility.Awaitility.await;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @QuarkusTestResource(KafkaTestResource.class)
-@TestHTTPEndpoint(DashboardResource.class)
 public class DashboardResourceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DashboardResourceTest.class);
@@ -46,6 +50,8 @@ public class DashboardResourceTest {
     @Test
     public void testStreaming() {
 
+        LOGGER.info("starting");
+
         try {
             DashboardUpdate dashboardUpdate = new DashboardUpdate(
                     "82124c69-a108-4ccc-9ac4-64566e389178",
@@ -55,18 +61,35 @@ public class DashboardResourceTest {
                     OrderStatus.IN_QUEUE,
                     Optional.empty()
             );
+
             InMemorySource<String> ordersIn = connector.source("web-updates");
             ordersIn.send(JsonUtil.toJson(dashboardUpdate));
-            await().atLeast(2, TimeUnit.SECONDS);
 
-            URI uri = new URI("http://localhost:8080/dashboard/stream");
+            LOGGER.info("DashboardUpdate sent");
+
+//            await().atLeast(2, TimeUnit.SECONDS).then().;
+
+            URI uri = new URI("http://localhost:8081/dashboard/stream");
+
+//            when()
+//                .get(uri)
+//                .then()
+//                .statusCode(200)
+//                .time(lessThan(5L), TimeUnit.SECONDS)
+//                .body("$", hasItem("orderId"));
+//
+//            System.out.println("RESTAssured completed");
+
             HttpClient httpClient = HttpClient.newHttpClient();
             HttpRequest httpRequest = HttpRequest.newBuilder(uri).GET().build();
             Stream<String> lines = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofLines()).body();
+            lines.forEach(System.out::println);
 
             Optional<String> payload = lines.filter(l -> l.length() >= 1).findFirst();
             assertTrue(payload.isPresent());
             assertEquals(expectedPayload, payload.get());
+
+            assertTrue(false);
         } catch (URISyntaxException e) {
             assertNull(e, "Exception thrown");
         } catch (IOException e) {
