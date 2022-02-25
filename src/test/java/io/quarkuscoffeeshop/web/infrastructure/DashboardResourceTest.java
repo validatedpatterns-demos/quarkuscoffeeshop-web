@@ -17,6 +17,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.inject.Any;
 import javax.inject.Inject;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.sse.InboundSseEvent;
+import javax.ws.rs.sse.SseEventSource;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,6 +30,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.when;
@@ -50,54 +56,52 @@ public class DashboardResourceTest {
     @Test
     public void testStreaming() {
 
-        LOGGER.info("starting");
+        DashboardUpdate dashboardUpdate = new DashboardUpdate(
+                "82124c69-a108-4ccc-9ac4-64566e389178",
+                "f84cb5e2-a3fd-43af-8df8-b5d74b133115",
+                "Scotty",
+                Item.COFFEE_WITH_ROOM,
+                OrderStatus.IN_QUEUE,
+                Optional.empty()
+        );
 
+        LOGGER.info("{}", dashboardUpdate);
+
+        URI uri = null;
         try {
-            DashboardUpdate dashboardUpdate = new DashboardUpdate(
-                    "82124c69-a108-4ccc-9ac4-64566e389178",
-                    "f84cb5e2-a3fd-43af-8df8-b5d74b133115",
-                    "Scotty",
-                    Item.COFFEE_WITH_ROOM,
-                    OrderStatus.IN_QUEUE,
-                    Optional.empty()
-            );
-
-            InMemorySource<String> ordersIn = connector.source("web-updates");
-            ordersIn.send(JsonUtil.toJson(dashboardUpdate));
-
-            LOGGER.info("DashboardUpdate sent");
-
-//            await().atLeast(2, TimeUnit.SECONDS).then().;
-
-            URI uri = new URI("http://localhost:8081/dashboard/stream");
-
-//            when()
-//                .get(uri)
-//                .then()
-//                .statusCode(200)
-//                .time(lessThan(5L), TimeUnit.SECONDS)
-//                .body("$", hasItem("orderId"));
-//
-//            System.out.println("RESTAssured completed");
-
-            HttpClient httpClient = HttpClient.newHttpClient();
-            HttpRequest httpRequest = HttpRequest.newBuilder(uri).GET().build();
-            Stream<String> lines = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofLines()).body();
-            lines.forEach(System.out::println);
-
-            Optional<String> payload = lines.filter(l -> l.length() >= 1).findFirst();
-            assertTrue(payload.isPresent());
-            assertEquals(expectedPayload, payload.get());
-
-            assertTrue(false);
+            uri = new URI("http://localhost:8080/dashboard/stream");
         } catch (URISyntaxException e) {
-            assertNull(e, "Exception thrown");
-        } catch (IOException e) {
-            assertNull(e, "Exception thrown");
-        } catch (InterruptedException e) {
-            assertNull(e, "Exception thrown");
+            assertNull(e);
         }
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(uri);
 
+        SseEventSource sseEventSource = SseEventSource.target(target).build();
+        sseEventSource.register(onEvent, onError, onComplete);
+        sseEventSource.open();
+
+        // marshall the JSON payload
+        String formattedUpdate = JsonUtil.toJson(dashboardUpdate);
+
+        // send the JSON payload
+        InMemorySource<String> source = connector.source("web-updates");
+        source.send(formattedUpdate);
+        LOGGER.info("updates sent {}", formattedUpdate);
     }
 
+    // verify that the event matches our expectations
+    private static Consumer<InboundSseEvent> onEvent = (inboundSseEvent) -> {
+        String data = inboundSseEvent.readData();
+        LOGGER.info("event received: {}", data);
+        assertEquals(expectedPayload, data);
+    };
+
+    private static Consumer<Throwable> onError = (throwable) -> {
+        LOGGER.error("error {}", throwable.getMessage());
+        assertNull(throwable);
+    };
+
+    private static Runnable onComplete = () -> {
+        LOGGER.info("done!");
+    };
 }
