@@ -48,7 +48,7 @@ public class SSETest {
                 "Scotty",
                 Item.COFFEE_WITH_ROOM,
                 OrderStatus.IN_QUEUE,
-                Optional.empty()
+                null
         );
 
         LOGGER.info("{}", dashboardUpdate);

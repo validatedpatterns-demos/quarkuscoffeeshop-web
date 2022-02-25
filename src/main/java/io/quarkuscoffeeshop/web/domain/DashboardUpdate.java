@@ -29,16 +29,13 @@ public class DashboardUpdate {
             @JsonProperty("name") String name,
             @JsonProperty("item") Item item,
             @JsonProperty("status") OrderStatus status,
-            @JsonProperty("madeBy") Optional<String> madeBy) {
+            @JsonProperty("madeBy") String madeBy) {
         this.orderId = orderId;
         this.itemId = itemId;
         this.name = name;
         this.item = item;
         this.status = status;
-        if (madeBy.isPresent()) {
-            this.madeBy = madeBy.get();
-        }else{
-            this.madeBy = "";
-        }
+        this.madeBy = madeBy;
     }
+
 }
