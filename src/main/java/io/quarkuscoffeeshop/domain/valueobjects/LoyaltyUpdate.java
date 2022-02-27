@@ -1,5 +1,6 @@
 package io.quarkuscoffeeshop.domain.valueobjects;
 
+import java.util.Objects;
 import java.util.StringJoiner;
 
 public class LoyaltyUpdate {
@@ -28,8 +29,8 @@ public class LoyaltyUpdate {
 
         LoyaltyUpdate that = (LoyaltyUpdate) o;
 
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        return reward != null ? reward.equals(that.reward) : that.reward == null;
+        if (!Objects.equals(email, that.email)) return false;
+        return Objects.equals(reward, that.reward);
     }
 
     @Override

@@ -20,7 +20,6 @@ import javax.ws.rs.sse.SseEventSource;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -86,7 +85,5 @@ public class SSETest {
     };
 
     //Connection close and there is nothing to receive
-    private static Runnable onComplete = () -> {
-        LOGGER.info("done!");
-    };
+    private static Runnable onComplete = () -> LOGGER.info("done!");
 }

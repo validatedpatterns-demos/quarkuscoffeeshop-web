@@ -26,11 +26,11 @@ public class OrderPlacedEvent {
     }
 
     public List<LineItem> getBeverages() {
-        return beverages == null ? new ArrayList<LineItem>() : beverages;
+        return beverages == null ? new ArrayList<>() : beverages;
     }
 
     public List<LineItem> getKitchenOrders() {
-        return kitchenOrders == null ? new ArrayList<LineItem>() : kitchenOrders;
+        return kitchenOrders == null ? new ArrayList<>() : kitchenOrders;
     }
 
     public void addBeverages(final String id, final List<LineItem> beverageList) {

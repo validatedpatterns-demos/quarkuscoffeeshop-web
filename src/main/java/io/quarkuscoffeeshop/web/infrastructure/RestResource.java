@@ -2,7 +2,6 @@ package io.quarkuscoffeeshop.web.infrastructure;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkuscoffeeshop.web.domain.commands.PlaceOrderCommand;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -17,8 +16,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.concurrent.CompletionStage;
-
-import static io.quarkuscoffeeshop.web.infrastructure.JsonUtil.toJson;
 
 @RegisterForReflection
 @Path("/")
@@ -58,9 +55,7 @@ public class RestResource {
         logger.debug("order received: {}", placeOrderCommand.toString());
 
         return orderService.placeOrder(placeOrderCommand)
-            .thenApply(res -> {
-                return Response.accepted().entity(placeOrderCommand).build();
-            }).exceptionally(ex -> {
+            .thenApply(res -> Response.accepted().entity(placeOrderCommand).build()).exceptionally(ex -> {
                     logger.error(ex.getMessage());
                     return Response.serverError().entity(ex).build();
             });

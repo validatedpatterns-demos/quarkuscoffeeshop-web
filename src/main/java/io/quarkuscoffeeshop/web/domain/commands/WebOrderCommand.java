@@ -4,6 +4,7 @@ import io.quarkuscoffeeshop.domain.OrderLineItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 public class WebOrderCommand {
@@ -64,14 +65,14 @@ public class WebOrderCommand {
 
         WebOrderCommand that = (WebOrderCommand) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (!Objects.equals(id, that.id)) return false;
         if (orderSource != null ? !orderSource.equals(that.orderSource) : that.orderSource != null) return false;
-        if (location != null ? !location.equals(that.location) : that.location != null) return false;
-        if (loyaltyMemberId != null ? !loyaltyMemberId.equals(that.loyaltyMemberId) : that.loyaltyMemberId != null)
+        if (!Objects.equals(location, that.location)) return false;
+        if (!Objects.equals(loyaltyMemberId, that.loyaltyMemberId))
             return false;
-        if (baristaLineItems != null ? !baristaLineItems.equals(that.baristaLineItems) : that.baristaLineItems != null)
+        if (!Objects.equals(baristaLineItems, that.baristaLineItems))
             return false;
-        return kitchenLineItems != null ? kitchenLineItems.equals(that.kitchenLineItems) : that.kitchenLineItems == null;
+        return Objects.equals(kitchenLineItems, that.kitchenLineItems);
     }
 
     @Override

@@ -3,6 +3,7 @@ package io.quarkuscoffeeshop.web.domain;
 import io.quarkuscoffeeshop.domain.Item;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 public class LineItem {
@@ -38,8 +39,8 @@ public class LineItem {
         LineItem lineItem = (LineItem) o;
 
         if (item != lineItem.item) return false;
-        if (name != null ? !name.equals(lineItem.name) : lineItem.name != null) return false;
-        return orderId != null ? orderId.equals(lineItem.orderId) : lineItem.orderId == null;
+        if (!Objects.equals(name, lineItem.name)) return false;
+        return Objects.equals(orderId, lineItem.orderId);
     }
 
     @Override

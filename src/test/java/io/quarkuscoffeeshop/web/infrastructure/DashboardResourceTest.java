@@ -1,15 +1,12 @@
 package io.quarkuscoffeeshop.web.infrastructure;
 
 import io.quarkus.test.common.QuarkusTestResource;
-import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkuscoffeeshop.domain.Item;
 import io.quarkuscoffeeshop.domain.OrderStatus;
 import io.quarkuscoffeeshop.web.domain.DashboardUpdate;
 import io.quarkuscoffeeshop.web.infrastructure.testsupport.KafkaTestResource;
-import io.restassured.http.ContentType;
 import io.smallrye.reactive.messaging.connectors.InMemoryConnector;
-import io.smallrye.reactive.messaging.connectors.InMemorySink;
 import io.smallrye.reactive.messaging.connectors.InMemorySource;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -22,24 +19,12 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.sse.InboundSseEvent;
 import javax.ws.rs.sse.SseEventSource;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
-import static io.restassured.RestAssured.when;
-import static org.awaitility.Awaitility.await;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-
-import static org.hamcrest.Matchers.lessThan;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @QuarkusTest
 @QuarkusTestResource(KafkaTestResource.class)
@@ -101,7 +86,5 @@ public class DashboardResourceTest {
         assertNull(throwable);
     };
 
-    private static Runnable onComplete = () -> {
-        LOGGER.info("done!");
-    };
+    private static Runnable onComplete = () -> LOGGER.info("done!");
 }

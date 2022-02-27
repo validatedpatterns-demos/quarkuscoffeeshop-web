@@ -4,6 +4,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Thrown when an item is out of stock
@@ -22,6 +23,6 @@ public class EightySixException extends Exception {
     }
 
     public Collection<EightySixEvent> getEvents() {
-        return Arrays.asList(new EightySixEvent(item));
+        return List.of(new EightySixEvent(item));
     }
 }

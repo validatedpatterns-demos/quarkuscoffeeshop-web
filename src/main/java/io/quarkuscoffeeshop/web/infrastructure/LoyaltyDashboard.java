@@ -2,7 +2,6 @@ package io.quarkuscoffeeshop.web.infrastructure;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkuscoffeeshop.domain.valueobjects.LoyaltyUpdate;
-import io.quarkuscoffeeshop.web.domain.DashboardUpdate;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.jboss.logging.Logger;
