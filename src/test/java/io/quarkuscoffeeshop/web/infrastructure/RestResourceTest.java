@@ -2,9 +2,7 @@ package io.quarkuscoffeeshop.web.infrastructure;
 
 import io.quarkus.test.junit.QuarkusMock;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.TestProfile;
 import io.quarkuscoffeeshop.web.domain.commands.PlaceOrderCommand;
-import io.quarkuscoffeeshop.web.infrastructure.testsupport.RestTestProfile;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -12,7 +10,6 @@ import org.mockito.Mockito;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
-
 import java.util.concurrent.CompletableFuture;
 
 import static io.restassured.RestAssured.given;
