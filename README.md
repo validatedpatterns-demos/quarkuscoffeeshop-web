@@ -27,12 +27,15 @@ docker compose up
 
 ### Environment Variables
 
-This services uses the following environment variables, all of which are set in development mode:
+This services uses the following environment variables, all of which are set in development mode:  
+
+NOTE: _Quarkus has a development mode that automatically listens for a debugger, watches for code changes and reloads your application immediately, and allows you to set application properties specifically for development.  You can learn more in Quarkus' getting started guide: https://quarkus.io/get-started_
+
 * KAFKA_BOOTSTRAP_SERVERS
 * STREAM_URL
 * CORS_ORIGINS
 
-If you wish to override these you can set them with the following:
+If you wish to override these you can set them with the following (on Linux or a Mac):
 
 ```shell script
 export KAFKA_BOOTSTRAP_SERVERS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080 STORE_ID=ATLANTA
@@ -40,7 +43,7 @@ export KAFKA_BOOTSTRAP_SERVERS=localhost:9092 STREAM_URL=http://localhost:8080/d
 
 ### Starting the app
 
-You can start the app in Quarkus dev mode with:
+To start the app in Quarkus dev mode with:
 
 ```shell script
 ./mvnw clean compile quarkus:dev
@@ -48,7 +51,7 @@ You can start the app in Quarkus dev mode with:
 
 ### Attaching a debugger
 
-By default Quarkus listens on port 5005 for a debugger.  You can change this by appending the flag, "-Ddebug<<PORT NUMBER>>" as in the below examples.  The parameter is optional, of course
+By default Quarkus listens on port 5005 for a debugger.  You can change this by appending the flag, "-Ddebug<<PORT NUMBER>>" as in the below examples.  The parameter is optional, of course:
 
 ```shell script
 ./mvnw clean compile quarkus:dev -Ddebug=5006
@@ -71,7 +74,9 @@ You will need to create a connection to the Crunchy PostgreSQL database.  Use th
 
 The settings are not currently persisted across restarts so they will have to be recreated each time "docker-compose up" is run
 
-## Packaging the native application
+## Containerizing the application (OPTIONAL)
+  
+Quarkus applications contain all the files needed to containerize the application yourself (you don't have to do this to run the app):
 
 ```shell
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true
@@ -82,8 +87,11 @@ docker images -a | grep web
 docker tag <<RESULT>> <<DOCKER_HUB_ID>>/quarkuscoffeeshop-web:<<VERSION>>
 ```
 
-### Running Locally in Native Mode
-```shell
+### Containerizing the application in Native Mode (OPTIONAL)
+
+Quarkus can also compile your Java application into a native binary (you don't have to do this to run the app):
+  
+ ```shell
 export KAFKA_BOOTSTRAP_URLS=localhost:9092 STREAM_URL=http://localhost:8080/dashboard/stream CORS_ORIGINS=http://localhost:8080
 ./mvnw clean package -Pnative -Dquarkus.native.container-build=true
 docker build -f src/main/docker/Dockerfile.native -t <<DOCKER_HUB_ID>>/quarkuscoffeeshop-web .
